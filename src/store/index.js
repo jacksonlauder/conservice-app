@@ -5,7 +5,7 @@ Vue.use(Vuex);
 
 export default new Vuex.Store({
   state: {
-    apiUrl: `${window.location.protocol}//${window.location.hostname}:3000/api`,
+    apiUrl: `${window.location.protocol}//${window.location.hostname}:3000`,
   },
   mutations: {},
   actions: {},
