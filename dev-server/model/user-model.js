@@ -12,7 +12,6 @@ const userSchema = new mongoose.Schema({
   empStatus: String,
   shift: String,
   manager: String,
-  photo: String,
   favColor: String,
 });
 userSchema.set("timestamps", true);

@@ -1,8 +1,4 @@
-/* eslint-disable no-path-concat */
-// eslint-disable-next-line no-unused-vars
-// const _ = require("lodash");
-// import express from "express";
-const express = require("express");
+import express from "express";
 // const history = require("connect-history-api-fallback");
 import { registerRoutes } from "./routes";
 import { setEnvironment } from "./config/env";

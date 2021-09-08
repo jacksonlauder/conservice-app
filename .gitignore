@@ -2,6 +2,7 @@
 node_modules
 /dist
 prod-server
+users.json
 
 
 # local env files
