@@ -1,4 +1,4 @@
-const mongoose = require('mongoose');
+const mongoose = require("mongoose");
 
 const userSchema = new mongoose.Schema({
   name: String,
@@ -12,6 +12,7 @@ const userSchema = new mongoose.Schema({
   empStatus: String,
   shift: String,
   manager: String,
+  photo: String,
   favColor: String,
 });
 userSchema.set("timestamps", true);

@@ -76,10 +76,13 @@
         </template>
       </v-data-table>
     </v-card>
+
+    <v-card> </v-card>
   </v-container>
 </template>
 
 <script>
+import * as UserService from "../services/UserService";
 export default {
   name: "Team",
 
@@ -192,7 +195,19 @@ export default {
         empStatus: "Terminated",
       },
     ],
+    users: null,
   }),
+
+  beforeRouteEnter(to, from, next) {
+    UserService.getAllUsers().then((res) => {
+      next((vm) => {
+        console.log("Hi");
+        console.log(res.data.users);
+        vm.users = res.data.users;
+      });
+    });
+  },
+
   methods: {
     getColor(status) {
       if (status == "Active") return "green";
