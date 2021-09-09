@@ -1,7 +1,7 @@
 <template>
   <v-container fluid class="pa-8">
     <v-row class="mb-5 align-center">
-      <v-col cols="3">
+      <v-col cols="4">
         <h1 class="v-heading text-h4 text-sm-h4">Team Members</h1>
       </v-col>
 
@@ -19,7 +19,7 @@
         ></v-text-field>
       </v-col>
 
-      <v-col cols="6">
+      <v-col cols="5">
         <v-btn color="#77bc1e" dark depressed>
           <v-icon left>mdi-plus</v-icon>
           Add Employee
