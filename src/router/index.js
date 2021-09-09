@@ -1,6 +1,8 @@
 import Vue from "vue";
 import VueRouter from "vue-router";
 import Home from "../views/Home.vue";
+import Permissions from "../views/Permissions.vue";
+import Reporting from "../views/Reporting.vue";
 
 Vue.use(VueRouter);
 
@@ -9,6 +11,21 @@ const routes = [
     path: "/",
     name: "Home",
     component: Home,
+  },
+  {
+    path: "/permissions",
+    name: "Permissions",
+    component: Permissions,
+  },
+  {
+    path: "/reporting",
+    name: "Reporting",
+    component: Reporting,
+  },
+
+  {
+    path: "*",
+    redirect: "/",
   },
 ];
 
