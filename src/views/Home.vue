@@ -306,7 +306,7 @@
                   </v-list-item>
                 </template>
                 <v-card>
-                  <v-card-title class="headline"> Delete User? </v-card-title>
+                  <v-card-title class="headline">Delete User?</v-card-title>
 
                   <v-divider />
 
@@ -386,8 +386,8 @@ export default {
         value: "menu",
       },
     ],
-    positions: ['Employee', 'Manager'],
-    status: ['Active', 'Inactive', 'Terminated'],
+    positions: ["Employee", "Manager"],
+    status: ["Active", "Inactive", "Terminated"],
     users: [],
     dialog: false,
     deleteDialog: false,
