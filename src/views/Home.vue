@@ -20,7 +20,12 @@
       </v-col>
 
       <v-col cols="5">
-        <v-btn color="#77bc1e" dark depressed>
+        <v-btn
+          color="#77bc1e"
+          dark
+          depressed
+          @click.stop="showProfileDialog = true"
+        >
           <v-icon left>mdi-plus</v-icon>
           Add Employee
         </v-btn>
@@ -97,7 +102,7 @@
                       </v-col>
 
                       <v-col cols="6">
-                        <v-form ref="form" v-model="valid" lazy-validation>
+                        <v-form ref="form" lazy-validation>
                           <label>Name</label>
                           <v-text-field
                             v-model="item.name"
@@ -172,7 +177,7 @@
                             ref="menu"
                             v-model="startDateMenu"
                             :close-on-content-click="false"
-                            :return-value.sync="date"
+                            :return-value.sync="startDate"
                             transition="scale-transition"
                             offset-y
                             min-width="auto"
@@ -192,15 +197,23 @@
                                 class="mb-2"
                               ></v-text-field>
                             </template>
-                            <v-date-picker v-model="date" no-title scrollable>
+                            <v-date-picker
+                              v-model="startDate"
+                              no-title
+                              scrollable
+                            >
                               <v-spacer></v-spacer>
-                              <v-btn text color="#77bc1e" @click="menu = false">
+                              <v-btn
+                                text
+                                color="#77bc1e"
+                                @click="startDateMenu = false"
+                              >
                                 Cancel
                               </v-btn>
                               <v-btn
                                 text
                                 color="#77bc1e"
-                                @click="$refs.menu.save(date)"
+                                @click="$refs.menu.save(startDate)"
                               >
                                 OK
                               </v-btn>
@@ -212,7 +225,7 @@
                             ref="menu"
                             v-model="endDateMenu"
                             :close-on-content-click="false"
-                            :return-value.sync="date"
+                            :return-value.sync="endDate"
                             transition="scale-transition"
                             offset-y
                             min-width="auto"
@@ -232,15 +245,23 @@
                                 class="mb-2"
                               ></v-text-field>
                             </template>
-                            <v-date-picker v-model="date" no-title scrollable>
+                            <v-date-picker
+                              v-model="endDate"
+                              no-title
+                              scrollable
+                            >
                               <v-spacer></v-spacer>
-                              <v-btn text color="#77bc1e" @click="menu = false">
+                              <v-btn
+                                text
+                                color="#77bc1e"
+                                @click="endDateMenu = false"
+                              >
                                 Cancel
                               </v-btn>
                               <v-btn
                                 text
                                 color="#77bc1e"
-                                @click="$refs.menu.save(date)"
+                                @click="$refs.menu.save(endDate)"
                               >
                                 OK
                               </v-btn>
@@ -365,13 +386,18 @@
         </template>
       </v-data-table>
     </v-card>
+    <ProfileDialog v-model="showProfileDialog" />
   </v-container>
 </template>
 
 <script>
 import * as UserService from "../services/UserService";
+import ProfileDialog from "../components/ProfileDialog.vue";
 export default {
   name: "Home",
+  components: {
+    ProfileDialog,
+  },
 
   data: () => ({
     search: "",
@@ -411,6 +437,13 @@ export default {
     positions: ["Employee", "Manager"],
     status: ["Active", "Inactive", "Terminated"],
     users: [],
+    startDate: new Date(Date.now() - new Date().getTimezoneOffset() * 60000)
+      .toISO,
+    endDate: new Date(Date.now() - new Date().getTimezoneOffset() * 60000)
+      .toISO,
+    startDateMenu: false,
+    endDateMenu: false,
+    showProfileDialog: false,
     editDialog: false,
     deleteDialog: false,
   }),
