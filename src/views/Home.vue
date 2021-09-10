@@ -57,7 +57,6 @@
             <v-list>
               <v-dialog
                 v-model="dialog"
-                scrollable
                 fullscreen
                 persistent
                 hide-overlay
@@ -84,6 +83,17 @@
                             mdi-account-circle
                           </v-icon>
                         </v-avatar>
+
+                        <v-tooltip bottom>
+                          <template v-slot:activator="{ on, attrs }">
+                            <v-btn fab icon absolute v-bind="attrs" v-on="on">
+                              <v-icon color="primary" large
+                                >mdi-camera-outline</v-icon
+                              >
+                            </v-btn>
+                          </template>
+                          <span>Edit Photo</span>
+                        </v-tooltip>
                       </v-col>
 
                       <v-col cols="6">
@@ -97,6 +107,7 @@
                             single-line
                             required
                             color="#77bc1e"
+                            class="mb-1"
                           ></v-text-field>
 
                           <label>Address</label>
@@ -107,6 +118,7 @@
                             hide-details
                             single-line
                             color="#77bc1e"
+                            class="mb-2"
                           ></v-text-field>
 
                           <label>E-mail</label>
@@ -118,6 +130,7 @@
                             single-line
                             required
                             color="#77bc1e"
+                            class="mb-2"
                           ></v-text-field>
 
                           <label>Preferred Contact Phone Number</label>
@@ -128,6 +141,7 @@
                             hide-details
                             single-line
                             color="#77bc1e"
+                            class="mb-2"
                           ></v-text-field>
 
                           <label>Position</label>
@@ -139,6 +153,7 @@
                             hide-details
                             single-line
                             color="#77bc1e"
+                            class="mb-2"
                           ></v-select>
 
                           <label>Department</label>
@@ -149,6 +164,7 @@
                             hide-details
                             single-line
                             color="#77bc1e"
+                            class="mb-2"
                           ></v-text-field>
 
                           <label>Start Date</label>
@@ -173,6 +189,7 @@
                                 hide-details
                                 single-line
                                 color="#77bc1e"
+                                class="mb-2"
                               ></v-text-field>
                             </template>
                             <v-date-picker v-model="date" no-title scrollable>
@@ -212,6 +229,7 @@
                                 hide-details
                                 single-line
                                 color="#77bc1e"
+                                class="mb-2"
                               ></v-text-field>
                             </template>
                             <v-date-picker v-model="date" no-title scrollable>
@@ -238,6 +256,7 @@
                             hide-details
                             single-line
                             color="#77bc1e"
+                            class="mb-2"
                           ></v-select>
 
                           <label>Shift</label>
@@ -248,6 +267,7 @@
                             hide-details
                             single-line
                             color="#77bc1e"
+                            class="mb-2"
                           ></v-text-field>
 
                           <label>Manager</label>
@@ -258,6 +278,7 @@
                             hide-details
                             single-line
                             color="#77bc1e"
+                            class="mb-2"
                           ></v-text-field>
 
                           <label>Favorite Color</label>
@@ -268,6 +289,7 @@
                             hide-details
                             single-line
                             color="#77bc1e"
+                            class="mb-2"
                           ></v-text-field>
                         </v-form>
                       </v-col>
