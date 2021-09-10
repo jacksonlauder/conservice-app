@@ -56,7 +56,7 @@
             </template>
             <v-list>
               <v-dialog
-                v-model="dialog"
+                v-model="editDialog"
                 fullscreen
                 persistent
                 hide-overlay
@@ -411,7 +411,7 @@ export default {
     positions: ["Employee", "Manager"],
     status: ["Active", "Inactive", "Terminated"],
     users: [],
-    dialog: false,
+    editDialog: false,
     deleteDialog: false,
   }),
 
