@@ -463,7 +463,9 @@ export default {
   methods: {
     getColor(status) {
       if (status == "Active") return "green";
-      else return "red";
+      else if (status == "Inactive") return "orange";
+      else if (status == "Terminated") return "red";
+      else return "transparent";
     },
     getUsers: async function () {
       await UserService.getAllUsers().then((res) => {

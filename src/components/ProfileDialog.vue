@@ -9,97 +9,97 @@
         transition="dialog-transition"
       >
         <v-card>
-          <v-container fluid fill-height>
-            <v-row>
-              <v-col cols="4" class="ml-5">
-                <v-avatar size="15em">
-                  <v-icon color="grey" size="15em"> mdi-account-circle </v-icon>
-                </v-avatar>
+          <v-card-title
+            primary-title
+            class="mx-auto"
+            style="position: relative; justify-content: center"
+          >
+            <h1 class="v-heading text-h4 text-sm-h4">Add New Employee</h1>
+          </v-card-title>
+          <v-form ref="newUserForm" @submit.prevent="onSubmit">
+            <v-container fluid fill-height>
+              <v-row justify="space-around">
+                <v-col cols="3" class="d-flex align-center justify-center">
+                  <v-avatar size="15em">
+                    <v-icon color="grey" size="15em">
+                      mdi-account-circle
+                    </v-icon>
+                  </v-avatar>
+                  <v-btn
+                    text
+                    color="primary"
+                    v-bind="attrs"
+                    v-on="on"
+                    class="align-center"
+                  >
+                    Add Photo
+                  </v-btn>
+                </v-col>
 
-                <v-tooltip bottom>
-                  <template v-slot:activator="{ on, attrs }">
-                    <v-btn fab icon absolute v-bind="attrs" v-on="on">
-                      <v-icon color="primary" large>mdi-camera-outline</v-icon>
-                    </v-btn>
-                  </template>
-                  <span>Edit Photo</span>
-                </v-tooltip>
-              </v-col>
-
-              <v-col cols="6">
-                <v-form ref="form" lazy-validation>
-                  <label>Name</label>
+                <v-col cols="7">
                   <v-text-field
-                    v-model="user.name"
+                    v-model="name"
+                    label="Name"
                     outlined
                     dense
                     hide-details
-                    single-line
-                    required
                     color="#77bc1e"
-                    class="mb-1"
+                    class="my-5"
                   ></v-text-field>
 
-                  <label>Address</label>
                   <v-text-field
-                    v-model="user.address"
+                    v-model="address"
+                    label="Address"
                     outlined
                     dense
                     hide-details
-                    single-line
                     color="#77bc1e"
-                    class="mb-2"
+                    class="mb-5"
                   ></v-text-field>
 
-                  <label>E-mail</label>
                   <v-text-field
-                    v-model="user.email"
+                    v-model="email"
+                    label="E-mail Address"
                     outlined
                     dense
                     hide-details
-                    single-line
-                    required
                     color="#77bc1e"
-                    class="mb-2"
+                    class="mb-5"
                   ></v-text-field>
 
-                  <label>Preferred Contact Phone Number</label>
                   <v-text-field
-                    v-model="user.phoneNumber"
+                    v-model="phoneNumber"
+                    label="Preferred Contact Phone Number"
                     outlined
                     dense
                     hide-details
-                    single-line
                     color="#77bc1e"
-                    class="mb-2"
+                    class="mb-5"
                   ></v-text-field>
 
-                  <label>Position</label>
                   <v-select
-                    v-model="user.position"
+                    v-model="position"
+                    label="Position"
                     :items="positions"
                     outlined
                     dense
                     hide-details
-                    single-line
                     color="#77bc1e"
-                    class="mb-2"
+                    class="mb-5"
                   ></v-select>
 
-                  <label>Department</label>
                   <v-text-field
-                    v-model="user.department"
+                    v-model="department"
+                    label="Department"
                     outlined
                     dense
                     hide-details
-                    single-line
                     color="#77bc1e"
-                    class="mb-2"
+                    class="mb-5"
                   ></v-text-field>
 
-                  <label>Start Date</label>
                   <v-menu
-                    ref="menu"
+                    ref="startDateMenuRef"
                     v-model="startDateMenu"
                     :close-on-content-click="false"
                     :return-value.sync="startDate"
@@ -109,7 +109,8 @@
                   >
                     <template v-slot:activator="{ on, attrs }">
                       <v-text-field
-                        v-model="user.startDate"
+                        v-model="startDate"
+                        label="Start Date"
                         prepend-inner-icon="mdi-calendar"
                         readonly
                         v-bind="attrs"
@@ -117,9 +118,8 @@
                         outlined
                         dense
                         hide-details
-                        single-line
                         color="#77bc1e"
-                        class="mb-2"
+                        class="mb-5"
                       ></v-text-field>
                     </template>
                     <v-date-picker v-model="startDate" no-title scrollable>
@@ -134,16 +134,15 @@
                       <v-btn
                         text
                         color="#77bc1e"
-                        @click="$refs.menu.save(startDate)"
+                        @click="$refs.startDateMenuRef.save(startDate)"
                       >
                         OK
                       </v-btn>
                     </v-date-picker>
                   </v-menu>
 
-                  <label>End Date</label>
                   <v-menu
-                    ref="menu"
+                    ref="endDateMenuRef"
                     v-model="endDateMenu"
                     :close-on-content-click="false"
                     :return-value.sync="endDate"
@@ -153,7 +152,8 @@
                   >
                     <template v-slot:activator="{ on, attrs }">
                       <v-text-field
-                        v-model="user.endDate"
+                        v-model="endDate"
+                        label="End Date"
                         prepend-inner-icon="mdi-calendar"
                         readonly
                         v-bind="attrs"
@@ -161,9 +161,8 @@
                         outlined
                         dense
                         hide-details
-                        single-line
                         color="#77bc1e"
-                        class="mb-2"
+                        class="mb-5"
                       ></v-text-field>
                     </template>
                     <v-date-picker v-model="endDate" no-title scrollable>
@@ -174,73 +173,67 @@
                       <v-btn
                         text
                         color="#77bc1e"
-                        @click="$refs.menu.save(endDate)"
+                        @click="$refs.endDateMenuRef.save(endDate)"
                       >
                         OK
                       </v-btn>
                     </v-date-picker>
                   </v-menu>
 
-                  <label>Employment Status</label>
                   <v-select
-                    v-model="user.empStatus"
+                    v-model="empStatus"
+                    label="Employment Status"
                     :items="status"
                     outlined
                     dense
                     hide-details
-                    single-line
                     color="#77bc1e"
-                    class="mb-2"
+                    class="mb-5"
                   ></v-select>
 
-                  <label>Shift</label>
                   <v-text-field
-                    v-model="user.shift"
+                    v-model="shift"
+                    label="Shift"
                     outlined
                     dense
                     hide-details
-                    single-line
                     color="#77bc1e"
-                    class="mb-2"
+                    class="mb-5"
                   ></v-text-field>
 
-                  <label>Manager</label>
                   <v-text-field
-                    v-model="user.manager"
+                    v-model="manager"
+                    label="Manager"
                     outlined
                     dense
                     hide-details
-                    single-line
                     color="#77bc1e"
-                    class="mb-2"
+                    class="mb-5"
                   ></v-text-field>
 
-                  <label>Favorite Color</label>
                   <v-text-field
-                    v-model="user.favColor"
+                    v-model="favColor"
+                    label="Favorite Color"
                     outlined
                     dense
                     hide-details
-                    single-line
                     color="#77bc1e"
-                    class="mb-2"
+                    class="mb-5"
                   ></v-text-field>
-                </v-form>
-              </v-col>
-            </v-row>
-          </v-container>
+                </v-col>
+              </v-row>
+            </v-container>
 
-          <v-divider />
-
-          <v-card-actions>
-            <v-btn outlined depressed large @click="show = false">
-              Cancel
-            </v-btn>
-            <v-spacer />
-            <v-btn depressed large color="green" dark @click="show = false">
-              Register
-            </v-btn>
-          </v-card-actions>
+            <v-card-actions class="mt-8 pb-8">
+              <v-spacer />
+              <v-btn depressed large color="green" dark type="submit">
+                Register
+              </v-btn>
+              <v-spacer />
+              <v-btn outlined depressed large @click="cancel"> Cancel </v-btn>
+              <v-spacer />
+            </v-card-actions>
+          </v-form>
         </v-card>
       </v-dialog>
     </v-row>
@@ -248,6 +241,8 @@
 </template>
 
 <script>
+import * as UserService from "../services/UserService";
+
 export default {
   name: "ProfileDialog",
   props: {
@@ -255,26 +250,23 @@ export default {
   },
 
   data: () => ({
-    user: {
-      name: "",
-      address: "",
-      email: "",
-      phoneNumber: "",
-      position: "",
-      department: "",
-      startDate: "",
-      endDate: "",
-      empStatus: "",
-      manager: "",
-      favColor: "",
-    },
-
-    positions: ["Employee", "Manager"],
-    status: ["Active", "Inactive", "Terminated"],
+    name: "",
+    address: "",
+    email: "",
+    phoneNumber: "",
+    position: "",
+    department: "",
     startDate: new Date(Date.now() - new Date().getTimezoneOffset() * 60000)
       .toISO,
     endDate: new Date(Date.now() - new Date().getTimezoneOffset() * 60000)
       .toISO,
+    empStatus: "",
+    shift: "",
+    photo: "",
+    manager: "",
+    favColor: "",
+    positions: ["Employee", "Manager"],
+    status: ["Active", "Inactive", "Terminated"],
     startDateMenu: false,
     endDateMenu: false,
   }),
@@ -287,6 +279,36 @@ export default {
       set(value) {
         this.$emit("input", value);
       },
+    },
+  },
+
+  methods: {
+    onSubmit: async function () {
+      this.$refs.newUserForm.validate();
+      const user = {
+        name: this.name,
+        address: this.address,
+        email: this.email,
+        phoneNumber: this.phoneNumber,
+        position: this.position,
+        department: this.department,
+        startDate: this.startDate,
+        endDate: this.endDate,
+        empStatus: this.empStatus,
+        shift: this.shift,
+        photo: this.photo,
+        manager: this.manager,
+        favColor: this.favColor,
+      };
+      await UserService.registerUser(user);
+      this.$refs.newUserForm.reset();
+      this.show = false;
+      this.$parent.getUsers();
+    },
+
+    cancel: function () {
+      this.$refs.newUserForm.reset();
+      this.show = false;
     },
   },
 };
