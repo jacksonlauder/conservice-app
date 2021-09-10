@@ -28,8 +28,6 @@
                   <v-btn
                     text
                     color="primary"
-                    v-bind="attrs"
-                    v-on="on"
                     class="align-center"
                   >
                     Add Photo
