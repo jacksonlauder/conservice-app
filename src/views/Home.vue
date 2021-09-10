@@ -299,7 +299,7 @@
                   <v-divider />
 
                   <v-card-actions>
-                    <v-btn outlined depressed large @click="dialog = false">
+                    <v-btn outlined depressed large @click="editDialog = false">
                       Cancel
                     </v-btn>
                     <v-spacer />
@@ -308,7 +308,7 @@
                       large
                       color="green"
                       dark
-                      @click="dialog = false"
+                      @click="editDialog = false"
                     >
                       Save
                     </v-btn>
