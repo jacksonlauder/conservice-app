@@ -27,7 +27,7 @@
           @click.stop="showProfileDialog = true"
         >
           <v-icon left>mdi-plus</v-icon>
-          Add Employee
+          New Employee
         </v-btn>
 
         <v-btn color="primary" icon fab @click.prevent="getUsers">
@@ -94,31 +94,16 @@
                   <v-form ref="form" @submit.prevent="onSubmit">
                     <v-container fluid>
                       <v-row justify="space-around">
-                        <v-col cols="3" class="d-flex justify-center">
-                          <div style="position: relative">
+                        <v-col cols="4">
+                          <div class="d-flex justify-center">
                             <v-avatar size="15em">
                               <v-icon color="grey" size="15em">
                                 mdi-account-circle
                               </v-icon>
                             </v-avatar>
-
-                            <v-tooltip bottom>
-                              <template v-slot:activator="{ on, attrs }">
-                                <v-btn
-                                  fab
-                                  icon
-                                  absolute
-                                  v-bind="attrs"
-                                  v-on="on"
-                                  style="right: -3rem"
-                                >
-                                  <v-icon color="primary" large
-                                    >mdi-camera-outline
-                                  </v-icon>
-                                </v-btn>
-                              </template>
-                              <span>Edit Photo</span>
-                            </v-tooltip>
+                          </div>
+                          <div class="d-flex justify-center">
+                            <v-btn text color="primary" style="text-transform: none"> Edit Photo </v-btn>
                           </div>
                         </v-col>
 

@@ -20,12 +20,14 @@
             <v-row justify="space-around">
               <v-col cols="4">
                 <div class="d-flex justify-center">
-                <v-avatar size="15em">
-                  <v-icon color="grey" size="15em"> mdi-account-circle </v-icon>
-                </v-avatar>
+                  <v-avatar size="15em">
+                    <v-icon color="grey" size="15em">
+                      mdi-account-circle
+                    </v-icon>
+                  </v-avatar>
                 </div>
                 <div class="d-flex justify-center">
-                  <v-btn text color="primary">
+                  <v-btn text color="primary" style="text-transform: none">
                     Add Photo
                   </v-btn>
                 </div>
