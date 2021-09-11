@@ -37,6 +37,7 @@
     </v-row>
     <v-card>
       <v-data-table :headers="headers" :items="users" :search="search">
+        <!-- eslint-disable-next-line -->
         <template v-slot:item.photo="{ item }">
           <v-avatar size="3em">
             <img v-if="item.photo !== ''" :src="item.photo" alt="alt" contain />
@@ -46,12 +47,14 @@
           </v-avatar>
         </template>
 
+        <!-- eslint-disable-next-line -->
         <template v-slot:item.empStatus="{ item }">
           <v-chip :color="getColor(item.empStatus)" dark>
             {{ item.empStatus }}
           </v-chip>
         </template>
 
+        <!-- eslint-disable-next-line -->
         <template v-slot:item.menu="{ item }">
           <v-menu rounded :close-on-click="true">
             <template v-slot:activator="{ on, attrs }">
@@ -103,7 +106,13 @@
                             </v-avatar>
                           </div>
                           <div class="d-flex justify-center">
-                            <v-btn text color="primary" style="text-transform: none"> Edit Photo </v-btn>
+                            <v-btn
+                              text
+                              color="primary"
+                              style="text-transform: none"
+                            >
+                              Edit Photo
+                            </v-btn>
                           </div>
                         </v-col>
 
