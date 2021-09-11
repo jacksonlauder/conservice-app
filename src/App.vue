@@ -1,16 +1,16 @@
 <template>
   <v-app>
     <v-app-bar app color="#333" dark flat clipped-left>
-      <!-- <v-app-bar-nav-icon
+      <v-app-bar-nav-icon v-if="$vuetify.breakpoint.smAndDown"
         @click.stop="drawer = !drawer"
-      ></v-app-bar-nav-icon> -->
+      ></v-app-bar-nav-icon>
       <v-toolbar-title>Conservice HR Application</v-toolbar-title>
     </v-app-bar>
 
     <v-navigation-drawer
       v-model="drawer"
       app
-      permanent
+      :permanent="$vuetify.breakpoint.mdAndUp"
       floating
       clipped
       hide-overlay
