@@ -1,13 +1,21 @@
 import { http } from "./HttpService";
 
+// Create a user
+export function registerUser(user) {
+  return http().post("/user", user);
+}
+
+// Read all users
 export function getAllUsers() {
   return http().get("/user");
 }
 
-export function deleteUser(id) {
-  return http().delete(`/user/${id}`);
+// Update a user
+export function updateUser(user) {
+  return http().put("/user", user);
 }
 
-export function registerUser(user) {
-  return http().post("/user", user);
+// Delete a user
+export function deleteUser(id) {
+  return http().delete(`/user/${id}`);
 }
