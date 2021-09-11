@@ -48,7 +48,7 @@ export function show(req, res) {
 }
 // Update a user
 export function update(req, res) {
-  User.findByIdAndUpdate(req.params.id, req.body, (error) => {
+  User.findByIdAndUpdate(req.body.user._id, req.body.user, (error) => {
     if (error) {
       console.log(error);
       return res.status(500).json();

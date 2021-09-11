@@ -68,7 +68,12 @@
                 transition="dialog-transition"
               >
                 <template v-slot:activator="{ on, attrs }">
-                  <v-list-item link v-bind="attrs" v-on="on">
+                  <v-list-item
+                    link
+                    v-bind="attrs"
+                    v-on="on"
+                    @click.prevent="editUser(item._id)"
+                  >
                     <v-list-item-icon>
                       <v-icon color="blue-grey darken-2">
                         mdi-square-edit-outline
@@ -86,7 +91,7 @@
                   >
                     <h1 class="v-heading text-h4 text-sm-h4">Edit Employee</h1>
                   </v-card-title>
-                  <v-form ref="form">
+                  <v-form ref="form" @submit.prevent="onSubmit">
                     <v-container fluid>
                       <v-row justify="space-around">
                         <v-col cols="3" class="d-flex justify-center">
@@ -120,7 +125,7 @@
                         <v-col cols="7">
                           <label>Name</label>
                           <v-text-field
-                            v-model="item.name"
+                            v-model="editedUser.name"
                             outlined
                             dense
                             hide-details
@@ -132,7 +137,7 @@
 
                           <label>Address</label>
                           <v-text-field
-                            v-model="item.address"
+                            v-model="editedUser.address"
                             outlined
                             dense
                             hide-details
@@ -143,7 +148,7 @@
 
                           <label>E-mail</label>
                           <v-text-field
-                            v-model="item.email"
+                            v-model="editedUser.email"
                             outlined
                             dense
                             hide-details
@@ -155,7 +160,7 @@
 
                           <label>Preferred Contact Phone Number</label>
                           <v-text-field
-                            v-model="item.phoneNumber"
+                            v-model="editedUser.phoneNumber"
                             outlined
                             dense
                             hide-details
@@ -166,7 +171,7 @@
 
                           <label>Position</label>
                           <v-select
-                            v-model="item.position"
+                            v-model="editedUser.position"
                             :items="positions"
                             outlined
                             dense
@@ -178,7 +183,7 @@
 
                           <label>Department</label>
                           <v-text-field
-                            v-model="item.department"
+                            v-model="editedUser.department"
                             outlined
                             dense
                             hide-details
@@ -191,17 +196,17 @@
                             <v-col>
                               <label>Start Date</label>
                               <v-menu
-                                ref="menu"
+                                ref="startDateMenuRef"
                                 v-model="startDateMenu"
                                 :close-on-content-click="false"
-                                :return-value.sync="startDate"
+                                :return-value.sync="editedUser.startDate"
                                 transition="scale-transition"
                                 offset-y
                                 min-width="auto"
                               >
                                 <template v-slot:activator="{ on, attrs }">
                                   <v-text-field
-                                    v-model="item.startDate"
+                                    v-model="editedUser.startDate"
                                     prepend-inner-icon="mdi-calendar"
                                     readonly
                                     v-bind="attrs"
@@ -215,7 +220,7 @@
                                   ></v-text-field>
                                 </template>
                                 <v-date-picker
-                                  v-model="startDate"
+                                  v-model="editedUser.startDate"
                                   no-title
                                   scrollable
                                 >
@@ -230,7 +235,11 @@
                                   <v-btn
                                     text
                                     color="#77bc1e"
-                                    @click="$refs.menu.save(startDate)"
+                                    @click="
+                                      $refs.startDateMenuRef.save(
+                                        editedUser.startDate
+                                      )
+                                    "
                                   >
                                     OK
                                   </v-btn>
@@ -241,17 +250,17 @@
                             <v-col>
                               <label>End Date</label>
                               <v-menu
-                                ref="menu"
+                                ref="endDateMenuRef"
                                 v-model="endDateMenu"
                                 :close-on-content-click="false"
-                                :return-value.sync="endDate"
+                                :return-value.sync="editedUser.endDate"
                                 transition="scale-transition"
                                 offset-y
                                 min-width="auto"
                               >
                                 <template v-slot:activator="{ on, attrs }">
                                   <v-text-field
-                                    v-model="item.endDate"
+                                    v-model="editedUser.endDate"
                                     prepend-inner-icon="mdi-calendar"
                                     readonly
                                     v-bind="attrs"
@@ -265,7 +274,7 @@
                                   ></v-text-field>
                                 </template>
                                 <v-date-picker
-                                  v-model="endDate"
+                                  v-model="editedUser.endDate"
                                   no-title
                                   scrollable
                                 >
@@ -280,7 +289,11 @@
                                   <v-btn
                                     text
                                     color="#77bc1e"
-                                    @click="$refs.menu.save(endDate)"
+                                    @click="
+                                      $refs.endDateMenuRef.save(
+                                        editedUser.endDate
+                                      )
+                                    "
                                   >
                                     OK
                                   </v-btn>
@@ -291,7 +304,7 @@
 
                           <label>Employment Status</label>
                           <v-select
-                            v-model="item.empStatus"
+                            v-model="editedUser.empStatus"
                             :items="status"
                             outlined
                             dense
@@ -303,7 +316,7 @@
 
                           <label>Shift</label>
                           <v-text-field
-                            v-model="item.shift"
+                            v-model="editedUser.shift"
                             outlined
                             dense
                             hide-details
@@ -314,7 +327,7 @@
 
                           <label>Manager</label>
                           <v-text-field
-                            v-model="item.manager"
+                            v-model="editedUser.manager"
                             outlined
                             dense
                             hide-details
@@ -325,7 +338,7 @@
 
                           <label>Favorite Color</label>
                           <v-text-field
-                            v-model="item.favColor"
+                            v-model="editedUser.favColor"
                             outlined
                             dense
                             hide-details
@@ -339,13 +352,7 @@
 
                     <v-card-actions class="mt-5 pb-8">
                       <v-spacer />
-                      <v-btn
-                        depressed
-                        large
-                        color="green"
-                        dark
-                        @click="editDialog = false"
-                      >
+                      <v-btn depressed large color="green" dark type="submit">
                         Save
                       </v-btn>
                       <v-spacer />
@@ -413,17 +420,17 @@
         </template>
       </v-data-table>
     </v-card>
-    <ProfileDialog v-model="showProfileDialog" />
+    <NewProfileDialog v-model="showProfileDialog" />
   </v-container>
 </template>
 
 <script>
 import * as UserService from "../services/UserService";
-import ProfileDialog from "../components/ProfileDialog.vue";
+import NewProfileDialog from "../components/NewProfileDialog.vue";
 export default {
   name: "Home",
   components: {
-    ProfileDialog,
+    NewProfileDialog,
   },
 
   data: () => ({
@@ -464,15 +471,27 @@ export default {
     positions: ["Employee", "Manager"],
     status: ["Active", "Inactive", "Terminated"],
     users: [],
-    startDate: new Date(Date.now() - new Date().getTimezoneOffset() * 60000)
-      .toISO,
-    endDate: new Date(Date.now() - new Date().getTimezoneOffset() * 60000)
-      .toISO,
+    editedUser: {
+      name: "",
+      address: "",
+      email: "",
+      phoneNumber: "",
+      position: "",
+      department: "",
+      startDate: "",
+      endDate: "",
+      empStatus: "",
+      shift: "",
+      photo: "",
+      manager: "",
+      favColor: "",
+    },
     startDateMenu: false,
     endDateMenu: false,
     showProfileDialog: false,
     editDialog: false,
     deleteDialog: false,
+    userId: "",
   }),
 
   beforeRouteEnter(to, from, next) {
@@ -498,6 +517,20 @@ export default {
       await UserService.getAllUsers().then((res) => {
         this.users = res.data.users;
       });
+    },
+    editUser: async function (id) {
+      await UserService.getUser(id).then((res) => {
+        this.editedUser = res.data.user;
+      });
+      this.userId = id;
+    },
+    onSubmit: async function () {
+      const user = {
+        user: this.editedUser,
+      };
+      await UserService.updateUser(user);
+      this.editDialog = false;
+      this.getUsers();
     },
     deleteUser: async function (id) {
       await UserService.deleteUser(id);
