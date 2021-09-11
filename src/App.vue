@@ -28,21 +28,11 @@
         <v-divider></v-divider>
 
         <v-list-item
-          @click="$router.push('/permissions')"
-          :ripple="false"
-          class="pl-5 mt-2"
-        >
-          <v-list-item-title>Permissions</v-list-item-title>
-        </v-list-item>
-
-        <v-divider></v-divider>
-
-        <v-list-item
           @click="$router.push('/reporting')"
           :ripple="false"
           class="pl-5 mt-2"
         >
-          <v-list-item-title>Reporting</v-list-item-title>
+          <v-list-item-title>Reports</v-list-item-title>
         </v-list-item>
       </v-list>
     </v-navigation-drawer>
