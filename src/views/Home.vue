@@ -1,12 +1,12 @@
 <template>
   <v-container fluid class="pa-8">
-    <EmployeeRecord v-model="showEmployeeRecord" :userData="userData" />
+    <!-- <EmployeeRecord v-model="showEmployeeRecord" :userData="userData" /> -->
     <v-row class="mb-5 align-center">
-      <v-col cols="4">
-        <h1 class="v-heading text-h4 text-sm-h4">Team Members</h1>
+      <v-col cols="5">
+        <h1 class="v-heading text-h4 text-sm-h4">Team & Members</h1>
       </v-col>
 
-      <v-col cols="3">
+      <v-col cols="4">
         <v-text-field
           v-model="search"
           outlined
@@ -20,20 +20,21 @@
         ></v-text-field>
       </v-col>
 
-      <v-col cols="5">
+      <v-col cols="3">
         <v-btn
           color="#77bc1e"
           dark
           depressed
+          small
           @click.stop="showProfileDialog = true"
         >
           <v-icon left>mdi-plus</v-icon>
           New Employee
         </v-btn>
 
-        <v-btn color="primary" icon fab @click.prevent="getUsers">
+        <!-- <v-btn color="primary" icon fab @click.prevent="getUsers">
           <v-icon>mdi-refresh</v-icon>
-        </v-btn>
+        </v-btn> -->
       </v-col>
     </v-row>
     <v-card>
@@ -456,8 +457,7 @@
                 <v-icon>mdi-dots-horizontal</v-icon>
               </v-btn>
             </template>
-            <v-list>
-
+            <v-list dense>
               <!-- <v-list-item link @click.prevent="editUserData(item._id)">
                 <v-list-item-icon>
                   <v-icon color="blue-grey darken-2">
@@ -472,7 +472,6 @@
               <v-dialog
                 v-model="editDialog"
                 fullscreen
-                persistent
                 hide-overlay
                 transition="dialog-transition"
               >
@@ -489,285 +488,335 @@
                       </v-icon>
                     </v-list-item-icon>
                     <v-list-item-content>
-                      <v-list-item-title>Edit (Dialog)</v-list-item-title>
+                      <v-list-item-title
+                        >Edit Employee Record</v-list-item-title
+                      >
                     </v-list-item-content>
                   </v-list-item>
                 </template>
                 <v-card>
-                  <v-card-title
-                    primary-title
-                    style="position: relative; justify-content: center"
-                  >
-                    <h1 class="v-heading text-h4 text-sm-h4">Edit Employee</h1>
-                  </v-card-title>
-                  <v-form ref="form" @submit.prevent="onSubmit">
-                    <v-container fluid>
-                      <v-row justify="space-around">
-                        <v-col cols="4">
-                          <div class="d-flex justify-center">
-                            <v-avatar size="15em">
-                              <v-icon color="grey" size="15em">
-                                mdi-account-circle
-                              </v-icon>
-                            </v-avatar>
-                          </div>
-                          <div class="d-flex justify-center">
-                            <v-btn
-                              text
-                              color="primary"
-                              style="text-transform: none"
-                            >
-                              Edit Photo
-                            </v-btn>
-                          </div>
-                        </v-col>
-
-                        <v-col cols="7">
-                          <label>Name</label>
-                          <v-text-field
-                            v-model="editedUser.name"
-                            outlined
-                            dense
-                            hide-details
-                            single-line
-                            required
-                            color="#77bc1e"
-                            class="mb-1"
-                          ></v-text-field>
-
-                          <label>Address</label>
-                          <v-text-field
-                            v-model="editedUser.address"
-                            outlined
-                            dense
-                            hide-details
-                            single-line
-                            color="#77bc1e"
-                            class="mb-1"
-                          ></v-text-field>
-
-                          <label>E-mail</label>
-                          <v-text-field
-                            v-model="editedUser.email"
-                            outlined
-                            dense
-                            hide-details
-                            single-line
-                            required
-                            color="#77bc1e"
-                            class="mb-1"
-                          ></v-text-field>
-
-                          <label>Preferred Contact Phone Number</label>
-                          <v-text-field
-                            v-model="editedUser.phoneNumber"
-                            outlined
-                            dense
-                            hide-details
-                            single-line
-                            color="#77bc1e"
-                            class="mb-1"
-                          ></v-text-field>
-
-                          <label>Position</label>
-                          <v-select
-                            v-model="editedUser.position"
-                            :items="positions"
-                            outlined
-                            dense
-                            hide-details
-                            single-line
-                            color="#77bc1e"
-                            class="mb-1"
-                          ></v-select>
-
-                          <label>Department</label>
-                          <v-text-field
-                            v-model="editedUser.department"
-                            outlined
-                            dense
-                            hide-details
-                            single-line
-                            color="#77bc1e"
-                            class="mb-1"
-                          ></v-text-field>
-
-                          <v-row>
-                            <v-col>
-                              <label>Start Date</label>
-                              <v-menu
-                                ref="startDateMenuRef"
-                                v-model="startDateMenu"
-                                :close-on-content-click="false"
-                                :return-value.sync="editedUser.startDate"
-                                transition="scale-transition"
-                                offset-y
-                                min-width="auto"
-                              >
-                                <template v-slot:activator="{ on, attrs }">
-                                  <v-text-field
-                                    v-model="editedUser.startDate"
-                                    prepend-inner-icon="mdi-calendar"
-                                    readonly
-                                    v-bind="attrs"
-                                    v-on="on"
-                                    outlined
-                                    dense
-                                    hide-details
-                                    single-line
-                                    color="#77bc1e"
-                                    class="mb-1"
-                                  ></v-text-field>
-                                </template>
-                                <v-date-picker
-                                  v-model="editedUser.startDate"
-                                  no-title
-                                  scrollable
-                                >
-                                  <v-spacer></v-spacer>
-                                  <v-btn
-                                    text
-                                    color="#77bc1e"
-                                    @click="startDateMenu = false"
-                                  >
-                                    Cancel
-                                  </v-btn>
-                                  <v-btn
-                                    text
-                                    color="#77bc1e"
-                                    @click="
-                                      $refs.startDateMenuRef.save(
-                                        editedUser.startDate
-                                      )
-                                    "
-                                  >
-                                    OK
-                                  </v-btn>
-                                </v-date-picker>
-                              </v-menu>
-                            </v-col>
-
-                            <v-col>
-                              <label>End Date</label>
-                              <v-menu
-                                ref="endDateMenuRef"
-                                v-model="endDateMenu"
-                                :close-on-content-click="false"
-                                :return-value.sync="editedUser.endDate"
-                                transition="scale-transition"
-                                offset-y
-                                min-width="auto"
-                              >
-                                <template v-slot:activator="{ on, attrs }">
-                                  <v-text-field
-                                    v-model="editedUser.endDate"
-                                    prepend-inner-icon="mdi-calendar"
-                                    readonly
-                                    v-bind="attrs"
-                                    v-on="on"
-                                    outlined
-                                    dense
-                                    hide-details
-                                    single-line
-                                    color="#77bc1e"
-                                    class="mb-1"
-                                  ></v-text-field>
-                                </template>
-                                <v-date-picker
-                                  v-model="editedUser.endDate"
-                                  no-title
-                                  scrollable
-                                >
-                                  <v-spacer></v-spacer>
-                                  <v-btn
-                                    text
-                                    color="#77bc1e"
-                                    @click="endDateMenu = false"
-                                  >
-                                    Cancel
-                                  </v-btn>
-                                  <v-btn
-                                    text
-                                    color="#77bc1e"
-                                    @click="
-                                      $refs.endDateMenuRef.save(
-                                        editedUser.endDate
-                                      )
-                                    "
-                                  >
-                                    OK
-                                  </v-btn>
-                                </v-date-picker>
-                              </v-menu>
-                            </v-col>
-                          </v-row>
-
-                          <label>Employment Status</label>
-                          <v-select
-                            v-model="editedUser.empStatus"
-                            :items="status"
-                            outlined
-                            dense
-                            hide-details
-                            single-line
-                            color="#77bc1e"
-                            class="mb-1"
-                          ></v-select>
-
-                          <label>Shift</label>
-                          <v-text-field
-                            v-model="editedUser.shift"
-                            outlined
-                            dense
-                            hide-details
-                            single-line
-                            color="#77bc1e"
-                            class="mb-1"
-                          ></v-text-field>
-
-                          <label>Manager</label>
-                          <v-text-field
-                            v-model="editedUser.manager"
-                            outlined
-                            dense
-                            hide-details
-                            single-line
-                            color="#77bc1e"
-                            class="mb-1"
-                          ></v-text-field>
-
-                          <label>Favorite Color</label>
-                          <v-text-field
-                            v-model="editedUser.favColor"
-                            outlined
-                            dense
-                            hide-details
-                            single-line
-                            color="#77bc1e"
-                            class="mb-1"
-                          ></v-text-field>
-                        </v-col>
+                  <v-container fluid>
+                    <v-card-title primary-title style="position: relative">
+                      <v-row>
+                        <v-card-title primary-title>
+                          <h1 class="v-heading text-h4 text-sm-h4">
+                            Edit Employee Record
+                          </h1>
+                        </v-card-title>
+                        <v-btn
+                          icon
+                          fab
+                          absolute
+                          right
+                          color="black"
+                          style="top: 0.5em"
+                          @click="editDialog = false"
+                          ><v-icon>mdi-close</v-icon></v-btn
+                        >
                       </v-row>
-                    </v-container>
+                    </v-card-title>
+                    <v-form ref="form" @submit.prevent="onSubmit">
+                      <v-container fluid>
+                        <v-row justify="space-around">
+                          <v-col cols="4">
+                            <div class="d-flex justify-center mb-1">
+                              <v-avatar size="15em">
+                                <v-icon color="grey" size="15em">
+                                  mdi-account-circle
+                                </v-icon>
+                              </v-avatar>
+                            </div>
+                            <div class="d-flex justify-center mb-7">
+                              <v-btn
+                                text
+                                color="primary"
+                                style="text-transform: none"
+                              >
+                                Edit Photo
+                              </v-btn>
+                            </div>
+                            <label>Position</label>
+                            <v-select
+                              v-model="editedUser.position"
+                              :items="positions"
+                              outlined
+                              dense
+                              hide-details
+                              single-line
+                              color="#77bc1e"
+                              class="mb-5"
+                            ></v-select>
+                            <label>Permissions</label>
+                            <v-list dense>
+                              <v-list-item>
+                                <v-list-item-title
+                                  >Permission 1
+                                </v-list-item-title>
+                                <v-switch v-model="switch1" inset></v-switch>
+                              </v-list-item>
 
-                    <v-card-actions class="mt-5 pb-8">
-                      <v-spacer />
-                      <v-btn depressed large color="green" dark type="submit">
-                        Save
-                      </v-btn>
-                      <v-spacer />
-                      <v-btn
-                        outlined
-                        depressed
-                        large
-                        @click="editDialog = false"
-                      >
-                        Cancel
-                      </v-btn>
+                              <v-list-item>
+                                <v-list-item-title
+                                  >Permission 2</v-list-item-title
+                                >
+                                <v-switch v-model="switch2" inset></v-switch>
+                              </v-list-item>
 
-                      <v-spacer />
-                    </v-card-actions>
-                  </v-form>
+                              <v-list-item>
+                                <v-list-item-title
+                                  >Permission 3</v-list-item-title
+                                >
+                                <v-switch v-model="switch3" inset></v-switch>
+                              </v-list-item>
+
+                              <v-list-item>
+                                <v-list-item-title
+                                  >Permission 4</v-list-item-title
+                                >
+                                <v-switch v-model="switch4" inset></v-switch>
+                              </v-list-item>
+                            </v-list>
+                          </v-col>
+
+                          <v-col cols="7">
+                            <label>Name</label>
+                            <v-text-field
+                              v-model="editedUser.name"
+                              outlined
+                              dense
+                              hide-details
+                              single-line
+                              required
+                              color="#77bc1e"
+                              class="mb-3"
+                            ></v-text-field>
+
+                            <label>Address</label>
+                            <v-text-field
+                              v-model="editedUser.address"
+                              outlined
+                              dense
+                              hide-details
+                              single-line
+                              color="#77bc1e"
+                              class="mb-3"
+                            ></v-text-field>
+
+                            <v-row>
+                              <v-col>
+                                <label>E-mail</label>
+                                <v-text-field
+                                  v-model="editedUser.email"
+                                  outlined
+                                  dense
+                                  hide-details
+                                  single-line
+                                  required
+                                  color="#77bc1e"
+                                  class="mb-3"
+                                ></v-text-field>
+                              </v-col>
+                              <v-col>
+                                <label>Preferred Contact Phone Number</label>
+                                <v-text-field
+                                  v-model="editedUser.phoneNumber"
+                                  outlined
+                                  dense
+                                  hide-details
+                                  single-line
+                                  color="#77bc1e"
+                                  class="mb-3"
+                                ></v-text-field>
+                              </v-col>
+                            </v-row>
+                            <label>Department</label>
+                            <v-text-field
+                              v-model="editedUser.department"
+                              outlined
+                              dense
+                              hide-details
+                              single-line
+                              color="#77bc1e"
+                              class="mb-3"
+                            ></v-text-field>
+
+                            <v-row>
+                              <v-col>
+                                <label>Start Date</label>
+                                <v-menu
+                                  ref="startDateMenuRef"
+                                  v-model="startDateMenu"
+                                  :close-on-content-click="false"
+                                  :return-value.sync="editedUser.startDate"
+                                  transition="scale-transition"
+                                  offset-y
+                                  min-width="auto"
+                                >
+                                  <template v-slot:activator="{ on, attrs }">
+                                    <v-text-field
+                                      v-model="editedUser.startDate"
+                                      prepend-inner-icon="mdi-calendar"
+                                      readonly
+                                      v-bind="attrs"
+                                      v-on="on"
+                                      outlined
+                                      dense
+                                      hide-details
+                                      single-line
+                                      color="#77bc1e"
+                                      class="mb-3"
+                                    ></v-text-field>
+                                  </template>
+                                  <v-date-picker
+                                    v-model="editedUser.startDate"
+                                    no-title
+                                    scrollable
+                                  >
+                                    <v-spacer></v-spacer>
+                                    <v-btn
+                                      text
+                                      color="#77bc1e"
+                                      @click="startDateMenu = false"
+                                    >
+                                      Cancel
+                                    </v-btn>
+                                    <v-btn
+                                      text
+                                      color="#77bc1e"
+                                      @click="
+                                        $refs.startDateMenuRef.save(
+                                          editedUser.startDate
+                                        )
+                                      "
+                                    >
+                                      OK
+                                    </v-btn>
+                                  </v-date-picker>
+                                </v-menu>
+                              </v-col>
+
+                              <v-col>
+                                <label>End Date</label>
+                                <v-menu
+                                  ref="endDateMenuRef"
+                                  v-model="endDateMenu"
+                                  :close-on-content-click="false"
+                                  :return-value.sync="editedUser.endDate"
+                                  transition="scale-transition"
+                                  offset-y
+                                  min-width="auto"
+                                >
+                                  <template v-slot:activator="{ on, attrs }">
+                                    <v-text-field
+                                      v-model="editedUser.endDate"
+                                      prepend-inner-icon="mdi-calendar"
+                                      readonly
+                                      v-bind="attrs"
+                                      v-on="on"
+                                      outlined
+                                      dense
+                                      hide-details
+                                      single-line
+                                      color="#77bc1e"
+                                      class="mb-3"
+                                    ></v-text-field>
+                                  </template>
+                                  <v-date-picker
+                                    v-model="editedUser.endDate"
+                                    no-title
+                                    scrollable
+                                  >
+                                    <v-spacer></v-spacer>
+                                    <v-btn
+                                      text
+                                      color="#77bc1e"
+                                      @click="endDateMenu = false"
+                                    >
+                                      Cancel
+                                    </v-btn>
+                                    <v-btn
+                                      text
+                                      color="#77bc1e"
+                                      @click="
+                                        $refs.endDateMenuRef.save(
+                                          editedUser.endDate
+                                        )
+                                      "
+                                    >
+                                      OK
+                                    </v-btn>
+                                  </v-date-picker>
+                                </v-menu>
+                              </v-col>
+                            </v-row>
+
+                            <label>Employment Status</label>
+                            <v-select
+                              v-model="editedUser.empStatus"
+                              :items="status"
+                              outlined
+                              dense
+                              hide-details
+                              single-line
+                              color="#77bc1e"
+                              class="mb-3"
+                            ></v-select>
+
+                            <label>Shift</label>
+                            <v-text-field
+                              v-model="editedUser.shift"
+                              outlined
+                              dense
+                              hide-details
+                              single-line
+                              color="#77bc1e"
+                              class="mb-3"
+                            ></v-text-field>
+
+                            <label>Manager</label>
+                            <v-text-field
+                              v-model="editedUser.manager"
+                              outlined
+                              dense
+                              hide-details
+                              single-line
+                              color="#77bc1e"
+                              class="mb-3"
+                            ></v-text-field>
+
+                            <label>Favorite Color</label>
+                            <v-text-field
+                              v-model="editedUser.favColor"
+                              outlined
+                              dense
+                              hide-details
+                              single-line
+                              color="#77bc1e"
+                              class="mb-3"
+                            ></v-text-field>
+                          </v-col>
+                        </v-row>
+                      </v-container>
+
+                      <v-card-actions class="mt-2">
+                        <v-spacer />
+                        <v-btn depressed large color="green" dark type="submit">
+                          Save
+                        </v-btn>
+                        <v-spacer />
+                        <v-btn
+                          outlined
+                          depressed
+                          large
+                          @click="editDialog = false"
+                        >
+                          Cancel
+                        </v-btn>
+
+                        <v-spacer />
+                      </v-card-actions>
+                    </v-form>
+                  </v-container>
                 </v-card>
               </v-dialog>
 
@@ -778,7 +827,9 @@
                       <v-icon color="blue-grey darken-2"> mdi-delete </v-icon>
                     </v-list-item-icon>
                     <v-list-item-content>
-                      <v-list-item-title>Delete</v-list-item-title>
+                      <v-list-item-title
+                        >Delete Employee Record</v-list-item-title
+                      >
                     </v-list-item-content>
                   </v-list-item>
                 </template>
@@ -815,6 +866,15 @@
                   </v-card-actions>
                 </v-card>
               </v-dialog>
+
+              <v-list-item link>
+                <v-list-item-icon>
+                  <v-icon color="blue-grey darken-2">mdi-account-clock</v-icon>
+                </v-list-item-icon>
+                <v-list-item-content>
+                  <v-list-item-title>View Activity Log</v-list-item-title>
+                </v-list-item-content>
+              </v-list-item>
             </v-list>
           </v-menu>
         </template>
@@ -896,6 +956,10 @@ export default {
     deleteDialog: false,
     userId: "",
     userData: null,
+    switch1: true,
+    switch2: false,
+    switch3: true,
+    switch4: false,
   }),
 
   beforeRouteEnter(to, from, next) {
@@ -954,3 +1018,9 @@ export default {
   },
 };
 </script>
+
+<style>
+.v-input--selection-controls {
+  margin-top: 0px !important;
+}
+</style>
