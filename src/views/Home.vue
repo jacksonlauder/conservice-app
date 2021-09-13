@@ -484,12 +484,12 @@
                   >
                     <v-list-item-icon>
                       <v-icon color="blue-grey darken-2">
-                        mdi-square-edit-outline
+                        mdi-account-edit
                       </v-icon>
                     </v-list-item-icon>
                     <v-list-item-content>
                       <v-list-item-title
-                        >Edit Employee Record</v-list-item-title
+                        >View & Edit Record</v-list-item-title
                       >
                     </v-list-item-content>
                   </v-list-item>
@@ -500,7 +500,7 @@
                       <v-row>
                         <v-card-title primary-title>
                           <h1 class="v-heading text-h4 text-sm-h4">
-                            Edit Employee Record
+                            Employee Record
                           </h1>
                         </v-card-title>
                         <v-btn
@@ -867,7 +867,7 @@
                 </v-card>
               </v-dialog>
 
-              <v-list-item link>
+              <v-list-item link @click.stop="showActivityLog = true">
                 <v-list-item-icon>
                   <v-icon color="blue-grey darken-2">mdi-account-clock</v-icon>
                 </v-list-item-icon>
@@ -881,17 +881,20 @@
       </v-data-table>
     </v-card>
     <NewProfileDialog v-model="showProfileDialog" />
+    <ActivityLog v-model="showActivityLog" />
   </v-container>
 </template>
 
 <script>
 import * as UserService from "../services/UserService";
 import NewProfileDialog from "../components/NewProfileDialog.vue";
+import ActivityLog from "../components/ActivityLog.vue"
 // import EmployeeRecord from "../components/EmployeeRecord.vue";
 export default {
   name: "Home",
   components: {
     NewProfileDialog,
+    ActivityLog,
     // EmployeeRecord,
   },
 
@@ -952,6 +955,7 @@ export default {
     endDateMenu: false,
     showProfileDialog: false,
     showEmployeeRecord: false,
+    showActivityLog: false,
     editDialog: false,
     deleteDialog: false,
     userId: "",

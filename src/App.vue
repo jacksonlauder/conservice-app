@@ -18,27 +18,24 @@
       color="grey lighten-4"
     >
       <v-list nav flat>
-        <v-list-item-group v-model="selectedItem" color="#77bc1e">
-          <v-list-item @click="$router.push('/')" :ripple="false" class="pl-5">
-            <v-list-item-icon>
-              <v-icon>mdi-account-group</v-icon>
-            </v-list-item-icon>
-            <v-list-item-title>Team & Members</v-list-item-title>
-          </v-list-item>
+        <v-list-item @click="$router.push('/')" :ripple="false" class="pl-5">
+          <v-list-item-icon>
+            <v-icon>mdi-account-group</v-icon>
+          </v-list-item-icon>
+          <v-list-item-title>Team & Members</v-list-item-title>
+        </v-list-item>
 
-          <v-divider></v-divider>
-
-          <v-list-item
-            @click="$router.push('/reports')"
-            :ripple="false"
-            class="pl-5 mt-2"
-          >
-            <v-list-item-icon>
-              <v-icon>mdi-chart-box</v-icon>
-            </v-list-item-icon>
-            <v-list-item-title>Reports</v-list-item-title>
-          </v-list-item>
-        </v-list-item-group>
+        <v-divider></v-divider>
+        <v-list-item
+          @click="$router.push('/reports')"
+          :ripple="false"
+          class="pl-5 mt-2"
+        >
+          <v-list-item-icon>
+            <v-icon>mdi-chart-box</v-icon>
+          </v-list-item-icon>
+          <v-list-item-title>Reports</v-list-item-title>
+        </v-list-item>
       </v-list>
     </v-navigation-drawer>
 
