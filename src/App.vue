@@ -22,7 +22,7 @@
           :ripple="false"
           class="pl-5"
         >
-          <v-list-item-title>Team Member View</v-list-item-title>
+          <v-list-item-title>Team & Members</v-list-item-title>
         </v-list-item>
 
         <v-divider></v-divider>
