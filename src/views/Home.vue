@@ -488,9 +488,7 @@
                       </v-icon>
                     </v-list-item-icon>
                     <v-list-item-content>
-                      <v-list-item-title
-                        >View & Edit Record</v-list-item-title
-                      >
+                      <v-list-item-title>View & Edit Record</v-list-item-title>
                     </v-list-item-content>
                   </v-list-item>
                 </template>
@@ -867,34 +865,86 @@
                 </v-card>
               </v-dialog>
 
-              <v-list-item link @click.stop="showActivityLog = true">
-                <v-list-item-icon>
-                  <v-icon color="blue-grey darken-2">mdi-account-clock</v-icon>
-                </v-list-item-icon>
-                <v-list-item-content>
-                  <v-list-item-title>View Activity Log</v-list-item-title>
-                </v-list-item-content>
-              </v-list-item>
+              <v-dialog
+                v-model="showActivityLog"
+                fullscreen
+                persistent
+                hide-overlay
+                transition="dialog-transition"
+                ><template v-slot:activator="{ on, attrs }">
+                  <v-list-item
+                    link
+                    v-bind="attrs"
+                    v-on="on"
+                    @click.prevent="userActivityLog(item._id)"
+                  >
+                    <v-list-item-icon>
+                      <v-icon color="blue-grey darken-2"
+                        >mdi-account-clock</v-icon
+                      >
+                    </v-list-item-icon>
+                    <v-list-item-content>
+                      <v-list-item-title>View Activity Log</v-list-item-title>
+                    </v-list-item-content>
+                  </v-list-item>
+                </template>
+
+                <v-card>
+                  <v-container fluid>
+                    <v-row class="mb-2">
+                      <v-card-title>
+                        <h1 class="v-heading text-h4 text-sm-h4">
+                          Account Activity Log
+                        </h1>
+                      </v-card-title>
+                      <v-btn
+                        icon
+                        fab
+                        absolute
+                        right
+                        color="black"
+                        style="top: 0.5em"
+                        @click="showActivityLog = false"
+                        ><v-icon>mdi-close</v-icon></v-btn
+                      >
+                    </v-row>
+
+                    <v-data-table
+                      :headers="activityHeaders"
+                      :items="editedUser.history"
+                    >
+                      <template v-slot:item="{ item }">
+                        <tr style="height: max-content">
+                          <td>{{ item.action }}</td>
+                          <td>{{ time(item.date) }}</td>
+                          <td class="py-5">{{ item.message }}</td>
+                        </tr>
+                      </template>
+                    </v-data-table>
+                  </v-container>
+                </v-card>
+              </v-dialog>
             </v-list>
           </v-menu>
         </template>
       </v-data-table>
     </v-card>
     <NewProfileDialog v-model="showProfileDialog" />
-    <ActivityLog v-model="showActivityLog" />
+    <!-- <ActivityLog v-model="showActivityLog" :userID="userId" /> -->
   </v-container>
 </template>
 
 <script>
 import * as UserService from "../services/UserService";
+import moment from "moment";
 import NewProfileDialog from "../components/NewProfileDialog.vue";
-import ActivityLog from "../components/ActivityLog.vue"
+// import ActivityLog from "../components/ActivityLog.vue";
 // import EmployeeRecord from "../components/EmployeeRecord.vue";
 export default {
   name: "Home",
   components: {
     NewProfileDialog,
-    ActivityLog,
+    // ActivityLog,
     // EmployeeRecord,
   },
 
@@ -950,12 +1000,37 @@ export default {
       photo: "",
       manager: "",
       favColor: "",
+      history: [
+        {
+          action: "",
+          date: "",
+          message: "",
+        },
+      ],
     },
     startDateMenu: false,
     endDateMenu: false,
     showProfileDialog: false,
-    showEmployeeRecord: false,
+    // showEmployeeRecord: false,
     showActivityLog: false,
+    activityHeaders: [
+      {
+        text: "Action",
+        align: "start",
+        sortable: false,
+        value: "action",
+        width: "25%",
+        filterable: false,
+      },
+      { text: "Date", value: "date", width: "25%", filterable: false },
+      {
+        text: "Message",
+        value: "message",
+        sortable: false,
+        width: "50%",
+        filterable: false,
+      },
+    ],
     editDialog: false,
     deleteDialog: false,
     userId: "",
@@ -979,6 +1054,10 @@ export default {
   },
 
   methods: {
+    time: function (timeRaw) {
+      var timeParsed = moment(timeRaw).format("L");
+      return timeParsed;
+    },
     getColor(status) {
       if (status == "Active") return "green";
       else if (status == "Inactive") return "orange";
@@ -995,6 +1074,11 @@ export default {
         this.editedUser = res.data.user;
       });
       this.userId = id;
+    },
+    userActivityLog: async function (id) {
+      await UserService.getUser(id).then((res) => {
+        this.editedUser = res.data.user;
+      });
     },
     // editUserData: async function (id) {
     //   await UserService.getUser(id).then((res) => {

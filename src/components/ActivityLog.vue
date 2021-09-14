@@ -51,6 +51,7 @@ export default {
   name: "ProfileDialog",
   props: {
     value: Boolean,
+    userId: String
   },
 
   data: () => ({
@@ -86,7 +87,12 @@ export default {
           "Modified Position Lorem ipsum dolor sit amet consectetur adipisicing elit. Ipsa atque doloremque blanditiis dolorem quo minus, animi modi veniam fugit earum? Illum ratione ducimus ipsam, asperiores veritatis itaque distinctio optio eveniet!",
       },
     ],
+    id: "",
   }),
+
+  updated: function() {
+    this.getUserData()
+  },
 
   computed: {
     show: {
@@ -103,6 +109,10 @@ export default {
     cancel: function () {
       this.show = false;
     },
+    getUserData: async function () {
+      this.id = this.userId
+      console.log(this.id)
+    }
   },
 };
 </script>

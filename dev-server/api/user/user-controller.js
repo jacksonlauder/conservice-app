@@ -48,12 +48,38 @@ export function show(req, res) {
 }
 // Update a user
 export function update(req, res) {
-  User.findByIdAndUpdate(req.body.user._id, req.body.user, (error) => {
+  const userId = req.body.user._id;
+
+  User.findById(userId, function (error, user) {
     if (error) {
       console.log(error);
-      return res.status(500).json();
     } else {
-      return res.status(204).json();
+      if (req.body.user.manager === user.manager) {
+        User.findByIdAndUpdate(userId, req.body.user, (error) => {
+          if (error) {
+            console.log(error);
+            return res.status(500).json();
+          } else {
+            return res.status(204).json();
+          }
+        });
+      } else {
+        const user = new User(req.body.user);
+        user.history.push({
+          action: "Modified user",
+          date: Date.now(),
+          message: "Changed manager to: " + user.manager,
+        });
+
+        User.findByIdAndUpdate(userId, user, (error) => {
+          if (error) {
+            console.log(error);
+            return res.status(500).json();
+          } else {
+            return res.status(204).json();
+          }
+        });
+      }
     }
   });
 }

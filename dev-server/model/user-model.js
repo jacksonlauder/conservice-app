@@ -14,6 +14,13 @@ const userSchema = new mongoose.Schema({
   manager: String,
   photo: String,
   favColor: String,
+  history: [
+    {
+      action: String,
+      date: Date,
+      message: String,
+    },
+  ],
 });
 userSchema.set("timestamps", true);
 
