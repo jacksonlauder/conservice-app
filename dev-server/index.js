@@ -1,11 +1,11 @@
 import express from "express";
-// const history = require("connect-history-api-fallback");
+const history = require("connect-history-api-fallback");
 import { registerRoutes } from "./routes";
 import { setEnvironment } from "./config/env";
 import { connectToDB } from "./config/db";
 
 const app = express();
-// app.use("/", history());
+app.use("/", history());
 
 setEnvironment(app);
 connectToDB();
