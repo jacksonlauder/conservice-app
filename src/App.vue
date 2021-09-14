@@ -24,6 +24,7 @@
             :key="i"
             :to="item.to"
             class="pl-5"
+            :ripple="false"
           >
             <v-list-item-icon>
               <v-icon v-text="item.icon"></v-icon>
