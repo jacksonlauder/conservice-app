@@ -912,6 +912,8 @@
                     <v-data-table
                       :headers="activityHeaders"
                       :items="editedUser.history"
+                      :sort-by.sync="sortBy"
+                      :sort-desc.sync="sortDesc"
                     >
                       <template v-slot:item="{ item }">
                         <tr style="height: max-content">
@@ -1013,6 +1015,8 @@ export default {
     showProfileDialog: false,
     // showEmployeeRecord: false,
     showActivityLog: false,
+    sortDesc: true,
+    sortBy: 'date',
     activityHeaders: [
       {
         text: "Action",
@@ -1057,6 +1061,18 @@ export default {
     time: function (timeRaw) {
       var timeParsed = moment(timeRaw).format("L");
       return timeParsed;
+    },
+    customSort(items, index, isDesc) {
+      items.sort((a, b) => {
+        if (index[0] == "Date") {
+          if (!isDesc[0]) {
+            return new Date(b[index]) - new Date(a[index]);
+          } else {
+            return new Date(a[index]) - new Date(b[index]);
+          }
+        }
+      });
+      return items;
     },
     getColor(status) {
       if (status == "Active") return "green";

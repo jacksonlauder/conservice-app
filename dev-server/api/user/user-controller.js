@@ -54,16 +54,7 @@ export function update(req, res) {
     if (error) {
       console.log(error);
     } else {
-      if (req.body.user.manager === user.manager) {
-        User.findByIdAndUpdate(userId, req.body.user, (error) => {
-          if (error) {
-            console.log(error);
-            return res.status(500).json();
-          } else {
-            return res.status(204).json();
-          }
-        });
-      } else {
+      if (req.body.user.manager !== user.manager) {
         const user = new User(req.body.user);
         user.history.push({
           action: "Modified user",
@@ -72,6 +63,31 @@ export function update(req, res) {
         });
 
         User.findByIdAndUpdate(userId, user, (error) => {
+          if (error) {
+            console.log(error);
+            return res.status(500).json();
+          } else {
+            return res.status(204).json();
+          }
+        });
+      } else if (req.body.user.position !== user.position) {
+        const user = new User(req.body.user);
+        user.history.push({
+          action: "Modified user",
+          date: Date.now(),
+          message: "Changed position to: " + user.position,
+        });
+
+        User.findByIdAndUpdate(userId, user, (error) => {
+          if (error) {
+            console.log(error);
+            return res.status(500).json();
+          } else {
+            return res.status(204).json();
+          }
+        });
+      } else {
+        User.findByIdAndUpdate(userId, req.body.user, (error) => {
           if (error) {
             console.log(error);
             return res.status(500).json();
