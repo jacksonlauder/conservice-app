@@ -1013,7 +1013,7 @@ export default {
     startDateMenu: false,
     endDateMenu: false,
     showProfileDialog: false,
-    showEmployeeRecord: false,
+    // showEmployeeRecord: false,
     showActivityLog: false,
     sortDesc: true,
     sortBy: 'date',
